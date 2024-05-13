@@ -28,7 +28,7 @@
     "@types/geojson": "^7946.0.8",
     "@types/jsonwebtoken": "^8.5.5",
     "@types/moment": "^2.13.0",
-    "@types/node": "^20.12.11",
+    "@types/node": "^20.10.0",
     "@types/nodemailer": "^6.4.15",
     "@types/pino": "^6.3.11",
     "copyfiles": "^2.4.1",
