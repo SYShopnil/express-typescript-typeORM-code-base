@@ -11,8 +11,10 @@ import {
   Column,
   BaseEntity,
   PrimaryColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
+  // CreateDateColumn,
+  // UpdateDateColumn,
+  BeforeInsert,
+  BeforeUpdate,
 } from "typeorm";
 
 @Entity()
@@ -103,15 +105,31 @@ export class User extends BaseEntity {
   @IsBoolean({ message: "Is Active will be Boolean" })
   public is_active!: boolean; //col - 7
 
-  @CreateDateColumn({
-    name: "create_at",
-  })
-  public create_at!: string; //col - 8
+  // @CreateDateColumn({
+  //   name: "create_at",
+  // })
+  // public create_at!: string; //col - 8
 
-  @UpdateDateColumn({
-    name: "update_at",
-  })
-  public update_at!: string; //col - 9
+  // @UpdateDateColumn({
+  //   name: "update_at",
+  // })
+  // public update_at!: string; //col - 9
+
+  @Column({ type: "datetime", name: "create_at" })
+  create_at: Date;
+
+  @Column({ type: "datetime", name: "update_at" })
+  update_at: Date;
+
+  @BeforeInsert()
+  setCreateAt() {
+    this.create_at = new Date();
+  }
+
+  @BeforeUpdate()
+  setUpdateAt() {
+    this.update_at = new Date();
+  }
 
   @Column({
     type: "varchar",
