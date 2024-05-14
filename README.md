@@ -1,30 +1,31 @@
-
-# Node TypeScript Boilerplate Postgres
+# Node TypeScript Boilerplate Express with MySQL(TypeORM)
 
 Developer Ready: A comprehensive template. Works out of the box for most Node.js projects.
 This project is intended to be used with the latest Active LTS release of Node.js.
+
 ## Tech Stack
+
+**Language:** TypeScript
 
 **Server:** Node, Express
 
-**DataBase:** postgres, typeorm
-
+**DataBase:** mySQL, typeorm
 
 ## Run Locally
 
 Clone the project
 
 ```bash
-  git clone https://github.com/chiragmehta900/node-typescript-boilerplate-postgres
+  git clone https://github.com/SYShopnil/express-typescript-typeORM-code-base.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd node-typescript-boilerplate-postgres
+  cd express-typescript-typeORM-code-base
 ```
 
-Install dependencies
+Install dependencies (Development)
 
 ```bash
   npm install
@@ -42,23 +43,45 @@ Start the server
   npm run dev
 ```
 
+Production development
+
+```bash
+  npm run build:production
+```
+
+Then
+
+```bash
+  npm run start
+```
 
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
 
-`PORT`
+**`PORT`** //this will be the server port
 
-`TOKEN_SECRET`
+**`DB_TYPE`** //this will be data base type example: mysql
 
-`REFRESH_TOKEN_SECRET`
+**`DB_HOST`** //this will be the hosting server Example: localhost
 
+**`DB_PORT`** //this will be the database server port Example: 3306 (default for xampp)
 
+**`DB_USER_NAME`** //this will be the databse user name Example: `root` for xampp sever default
 
-## Documentation
+**`DB_NAME`** //this will be the databse name. At first user need to create a database and then insert the name here Example:airQuality (a random databse name)
 
-[Documentation](https://linktodocumentation)
+**`DB_PASSWORD`** //this is database password for local this is optional
 
+**`TOKE_EXPIRE_IN`** //this will be jwt token expire time. It is count in Days Example: `"5d"`
+
+**`JWT_CODE`** // this will the jwt toke's secrete code
+
+**`AUTH_COOKIE_EXPIRE_IN`** //this will also a expire time of cookies It is also count in Days Exapmle: `5` mean **`5` days**
+
+**`CORS_ORIGIN`** //this will be the cors origin basicially the client site base url. Exapmle : `"http://localhost:3000"` Deafult base url of next js
+
+**`SERVER_BASE_URL`** `** //this will be the server's base url. Example: `"http://localhost:3030"`
 
 ## API Reference
 
@@ -68,64 +91,27 @@ To run this project, you will need to add the following environment variables to
   POST /user/create
 ```
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `firstName`      | `string` | **Required**. Your API key |
-| `lastName`      | `string` | **Required**. Your API key |
-| `email`      | `string` | **Required**. Your API key |
-| `password`      | `string` | **Required**. Your API key |
-| `phoneNumber`      | `number` | **Required**. Your API key |
+| Parameter          | Type     | Description                |
+| :----------------- | :------- | :------------------------- |
+| `first_name`       | `string` | **Required**. Your API key |
+| `last_name`        | `string` | **Required**. Your API key |
+| `email`            | `string` | **Required**. Your API key |
+| `password`         | `string` | **Required**. Your API key |
+| `confirm_password` | `string` | **Required**. Your API key |
+| `role`             | `string` | **Required**. Your API key |
+| `profile_pic`      | `string` | **Required**. Your API key |
 
 #### login user
 
 ```http
-  POST /user/login
+  POST /auth/login
 ```
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `phoneNumber`      | `number` | **Required**. Your API key |
-| `password`      | `string` | **Required**. Your API key |
-
-
-#### Get all users
-
-```http
-  GET /user/list
-```
-
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `id` | `uuid` | **Required**. Your API key |
-| `firstName` | `string` | **Required**. Your API key |
-| `lastName` | `string` | **Required**. Your API key |
-| `email` | `string` | **Required**. Your API key |
+| Parameter  | Type     | Description                |
+| :--------- | :------- | :------------------------- |
+| `email`    | `string` | **Required**. Your API key |
 | `password` | `string` | **Required**. Your API key |
-| `profileImage` | `string` | **Required**. Your API key |
-| `isActive` | `boolean` | **Required**. Your API key |
-| `phoneNumber` | `number` | **Required**. Your API key |
-| `tocken` | `string` | **Required**. Your API key |
-| `refreshToken` | `string` | **Required**. Your API key |
-
-A postman collection has been added for better understanding.
-
-
-## Badges
-
-Add badges from somewhere like: [shields.io](https://shields.io/)
-
-[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
-
-[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
-
-[![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
-
-
-## Author
-
-- [@chiragmehta900](https://www.github.com/chiragmehta900)
-
 
 ## Support
 
-For support, email chiragmehta900@gmial.com or join our Slack channel.
+For support, email sadmanishopnil@gmail.com.
