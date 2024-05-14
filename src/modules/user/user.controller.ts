@@ -4,6 +4,7 @@ import { Request, Response } from "express";
 import { UserService } from "./user.service";
 import { DCreateUser } from "./dto/create-user.dto";
 import { validate } from "class-validator";
+import { DUpdateUserById } from "./dto/update-user-by-id.dto";
 export class UserController {
   private userService = new UserService();
 
@@ -66,6 +67,67 @@ export class UserController {
       });
     }
   }
-  // async updateUserById(req: Request, res: Response): Promise<void> {}
-  // async deleteUserById(req: Request, res: Response): Promise<void> {}
+  async getAllUserBy(_: Request, res: Response): Promise<void> {
+    try {
+      const { message: getUserResponse, users } =
+        await this.userService.getAllUser();
+      if (users) {
+        res.json({
+          message: getUserResponse,
+          status: 202,
+          user: users,
+        });
+      } else {
+        res.json({
+          message: getUserResponse,
+          status: 404,
+          user: users,
+        });
+      }
+    } catch (err) {
+      res.json({
+        message: err.message,
+        status: 500,
+        user: null,
+      });
+    }
+  }
+  async updateUserById(req: Request, res: Response): Promise<void> {
+    try {
+      const verifyPayloadOfHeader: DUpdateUserById = req.body;
+      const validateDataInstance: DUpdateUserById | any = new DUpdateUserById();
+      for (const property in verifyPayloadOfHeader) {
+        validateDataInstance[property] = req.body[property];
+      }
+      validateDataInstance.userId = req.params.userId;
+      const isValidationError = await validate(validateDataInstance); //validate the input data here
+      if (isValidationError.length) {
+        res.status(422).json({
+          message: isValidationError,
+          status: 422,
+        });
+      } else {
+        const body = {
+          firstName: verifyPayloadOfHeader.first_name,
+          lastName: verifyPayloadOfHeader.last_name,
+          email: verifyPayloadOfHeader.email,
+        };
+        const { message: updateResponse, status } =
+          await this.userService.updateUserById(req.params.userId, body);
+        if (status) {
+          res.status(202).json({
+            message: updateResponse,
+            status: 202,
+          });
+        } else {
+          res.json({
+            message: updateResponse,
+            status: 406,
+          });
+        }
+      }
+    } catch (err) {
+      res.status(500).json({ message: err.message, status: 500 });
+    }
+  }
 }

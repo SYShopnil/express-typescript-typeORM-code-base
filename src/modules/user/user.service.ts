@@ -9,6 +9,21 @@ interface ICreateUserServiceResponse {
 
 export class UserService {
   private utilsService = new UtilsService();
+  private async getUserPasswordById(userId: string): Promise<string> {
+    try {
+      const getPasswordOfUserByUserId = await User.createQueryBuilder("user")
+        .where("user.user_id = :userId", { userId })
+        .select(["user.password"])
+        .getOne();
+      if (getPasswordOfUserByUserId) {
+        return getPasswordOfUserByUserId.password;
+      } else {
+        return "";
+      }
+    } catch (err) {
+      return err.message;
+    }
+  }
   async createUser(
     userData: Partial<User>
   ): Promise<ICreateUserServiceResponse> {
@@ -54,11 +69,39 @@ export class UserService {
       };
     }
   }
-  async updateUserById(userid: string): Promise<{ status: number }> {
-    console.log(userid);
-    return {
-      status: 202,
-    };
+  async updateUserById(
+    userId: string,
+    updateData: { firstName: string; lastName: string; email: string }
+  ): Promise<{ status: boolean; message: string }> {
+    try {
+      const updateUser = await User.createQueryBuilder("user")
+        .update()
+        .set({
+          first_name: updateData.firstName,
+          last_name: updateData.lastName,
+          email: updateData.email,
+        })
+        .where("user.is_active = true")
+        .andWhere("user.user_id= :userId", { userId })
+        .execute();
+
+      if (updateUser.affected) {
+        return {
+          status: true,
+          message: "User Successfully updated",
+        };
+      } else {
+        return {
+          status: false,
+          message: "User Update Failed",
+        };
+      }
+    } catch (err) {
+      return {
+        status: false,
+        message: err.message,
+      };
+    }
   }
   async getUserByEmail(emaiL: string): Promise<User | null> {
     try {
@@ -67,10 +110,13 @@ export class UserService {
         .andWhere("user.is_active = :active", { active: true })
         .select([
           "user.first_name",
-          "user.user_id",
           "user.last_name",
-          "user.email",
           "user.is_active",
+          "user.email",
+          "user.profile_pic",
+          "user.create_at",
+          "user.update_at",
+          "user.user_id",
           "user.role",
         ])
         .getOne();
@@ -123,21 +169,7 @@ export class UserService {
       };
     }
   }
-  private async getUserPasswordById(userId: string): Promise<string> {
-    try {
-      const getPasswordOfUserByUserId = await User.createQueryBuilder("user")
-        .where("user.user_id = :userId", { userId })
-        .select(["user.password"])
-        .getOne();
-      if (getPasswordOfUserByUserId) {
-        return getPasswordOfUserByUserId.password;
-      } else {
-        return "";
-      }
-    } catch (err) {
-      return err.message;
-    }
-  }
+
   async getUserById(userId: string): Promise<User | null> {
     try {
       const findUser = await User.createQueryBuilder("user")
@@ -165,10 +197,39 @@ export class UserService {
       return null;
     }
   }
-  async deleteUserById(userId: number): Promise<{ status: number }> {
-    console.log(userId);
-    return {
-      status: 202,
-    };
+  async getAllUser(): Promise<{ message: string; users: User[] | null }> {
+    try {
+      const getAllUser = await User.createQueryBuilder("user")
+        .where("user.is_active= true")
+        .select([
+          "user.first_name",
+          "user.last_name",
+          "user.is_active",
+          "user.email",
+          "user.profile_pic",
+          "user.create_at",
+          "user.update_at",
+          "user.user_id",
+          "user.role",
+        ])
+        .getMany();
+      if (getAllUser.length) {
+        return {
+          message: `${getAllUser.length} user found!!`,
+          users: getAllUser,
+        };
+      } else {
+        return {
+          message: "No User Found!!",
+          users: null,
+        };
+      }
+    } catch (err) {
+      console.log(err.messag);
+      return {
+        message: err.message,
+        users: null,
+      };
+    }
   }
 }
