@@ -33,7 +33,15 @@ Install dependencies (Development)
 
 Start the tsc
 
+If dist folder not exist
+
 ```bash
+  npm run dev:watch
+```
+
+If dist folder exist
+
+```bash (No Time)
   npm run watch
 ```
 
@@ -83,6 +91,8 @@ To run this project, you will need to add the following environment variables to
 
 **`SERVER_BASE_URL`** `** //this will be the server's base url. Example: `"http://localhost:3030"`
 
+**`CORS_ORIGIN`** `** //this will be the client's base url. Example: `"http://localhost:3000" For NextJS`
+
 ## API Reference
 
 #### Create user
@@ -112,6 +122,13 @@ To run this project, you will need to add the following environment variables to
 | `email`    | `string` | **Required**. Your API key |
 | `password` | `string` | **Required**. Your API key |
 
+### Documentation
+
+```
+[Swagger Link](https://express-typescript-typeorm-code-base-1.onrender.com/docs)
+
+
 ## Support
 
 For support, email sadmanishopnil@gmail.com.
+```

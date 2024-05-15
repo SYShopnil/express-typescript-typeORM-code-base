@@ -7,7 +7,9 @@ export class AuthMiddleWare {
   private authService = new AuthService();
   async auth(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const { auth: authToken } = req.cookies; //get the authToken from headers
+      const { auth: cookieToken } = req.cookies; //get the authToken from cookie name "auth"
+      const headToken = req.headers.authorization; //get the authToken from headers
+      const authToken = headToken || cookieToken;
       if (!authToken) {
         res.json({
           message: "Unauthorized user please login!!",

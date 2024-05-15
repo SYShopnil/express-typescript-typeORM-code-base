@@ -37,15 +37,11 @@ app.get("/", (_, res) => {
 Routes(app); //contain all api routes
 
 //Swagger setup part
-const swaggerUserDocument = JSON.parse(
-  fs.readFileSync(`${__dirname}/swagger.user.json`, "utf-8")
+const swaggerDocument = JSON.parse(
+  fs.readFileSync(`${__dirname}/swagger.json`, "utf-8")
 );
 
-const swaggerAuthDocument = JSON.parse(
-  fs.readFileSync(`${__dirname}/swagger.auth.json`, "utf-8")
-);
-app.use("/docs/user", swaggerUi.serve, swaggerUi.setup(swaggerUserDocument));
-app.use("/docs/auth", swaggerUi.serve, swaggerUi.setup(swaggerAuthDocument));
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.get("*", (_, res) => {
   res.json({

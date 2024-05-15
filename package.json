@@ -14,11 +14,10 @@
     "seed": "node  --max-old-space-size=8192 dist/services/seeder.js",
     "watch": "tsc -w",
     "dev": "nodemon dist/index.js",
+    "dev:watch": "npm run build:dist && npm run swagger && npm run watch",
     "start": "node dist/index.js",
     "typeorm": "dotenv -e .env typeorm",
-    "swagger": "npm run swagger:user && npm run swagger:auth",
-    "swagger:user": "swagger-jsdoc -d src/swagger.user.json -o  dist/swagger.user.json src/swagger.ts",
-    "swagger:auth": "swagger-jsdoc -d src/swagger.auth.json -o  dist/swagger.auth.json src/swagger.ts"
+    "swagger": "swagger-jsdoc -d src/swagger.json -o  dist/swagger.json src/swagger.ts"
   },
   "keywords": [],
   "author": "chiragmehta900",
