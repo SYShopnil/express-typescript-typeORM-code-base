@@ -7,6 +7,7 @@ const authController = new AuthController();
 const authMiddleware = new AuthMiddleWare();
 
 router.post("/login", authController.login.bind(authController));
+
 router.get(
   "/session",
   authMiddleware.auth.bind(authMiddleware),

@@ -18,17 +18,20 @@ export class AuthController {
         res.cookie("auth", authToken, optionForCookie).json({
           message: authMessage,
           status: 200,
+          token: authToken,
         });
       } else {
         res.json({
           status: 401,
           message: authMessage,
+          token: null,
         });
       }
     } catch (err) {
       res.json({
         status: 501,
         message: err.message,
+        token: null,
       });
     }
   }
