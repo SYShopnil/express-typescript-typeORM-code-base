@@ -124,11 +124,8 @@ To run this project, you will need to add the following environment variables to
 
 ### Documentation
 
-```
 [Swagger Link](https://express-typescript-typeorm-code-base-1.onrender.com/docs)
-
 
 ## Support
 
 For support, email sadmanishopnil@gmail.com.
-```
